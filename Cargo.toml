@@ -1,0 +1,5 @@
+[package]
+name = "crc32c"
+version = "0.1.0"
+authors = ["Julian Squires <julian@cipht.net>"]
+publish = false
