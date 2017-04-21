@@ -1,5 +1,20 @@
+//! Simplest possible interface to SSE4.2 CRC32C.
+
+#![warn(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    missing_docs,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_qualifications,
+    variant_size_differences,
+)]
+
 #![feature(asm)]
 
+/// Computes CRC32C checksum of `bytes`.
 #[cfg(any(target_arch = "x86_64"))]
 pub fn crc32c(bytes: &[u8]) -> u32
 {
