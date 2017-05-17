@@ -25,23 +25,20 @@ pub fn crc32c(bytes: &[u8]) -> u32
               xorl    %edx, %edx
               orq     $$-1, %rax
               shrq    $$3, %rcx
-         .L3:
-              cmpq    %rcx, %rdx
-              je      .L2
+         1:   cmpq    %rcx, %rdx
+              je      1f
               crc32q  (%rdi,%rdx,8), %rax
               incq    %rdx
-              jmp     .L3
-         .L2:
-              leaq    (%rdi,%rdx,8), %rcx
+              jmp     1b
+         1:   leaq    (%rdi,%rdx,8), %rcx
               andl    $$7, %esi
               xorl    %edx, %edx
-         .L5:
-              cmpq    %rdx, %rsi
-              je      .L1
+         1:   cmpq    %rdx, %rsi
+              je      1f
               crc32b  (%rcx,%rdx), %eax
               incq    %rdx
-              jmp     .L5
-         .L1: not     %eax"
+              jmp     1b
+         1:   not     %eax"
              : "={eax}" (csum)
              : "{rdi}" (bytes.as_ptr()), "{rsi}" (bytes.len())
              : "~rcx", "~rdx"
